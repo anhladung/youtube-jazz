@@ -1,0 +1,30 @@
+# Python / IDE
+.venv/
+__pycache__/
+*.py[cod]
+.idea/
+.pytest_cache/
+
+# Credentials and machine-local configuration
+secrets/
+config.local.yaml
+*.token.json
+
+# Runtime state and generated media
+logs/
+temp/
+output/
+input/batches/
+input/current_job/
+input/library_builds/
+library/music/tracks/
+library/music/.playwright-downloads/
+library/music/registry.json
+*.crdownload
+*.wav
+*.mp3
+*.mp4
+
+# Operating system files
+.DS_Store
+Thumbs.db

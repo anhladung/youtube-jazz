@@ -1,0 +1,59 @@
+flow:
+  url: "https://www.flowmusic.app/"
+  # Open this AdsPower profile manually before running the pipeline.
+  connection_mode: "adspower_cdp"
+  adspower_cache_root: "C:\\.ADSPOWER_GLOBAL\\cache"
+  generation_timeout_seconds: 1200
+  # If only one song appears, give Flow this long to produce the second one.
+  second_track_grace_seconds: 45
+  download_timeout_seconds: 180
+  # After WAV files are verified, wait before closing only the task tab.
+  post_download_settle_seconds: 15
+  # One initial generation plus one fresh retry after any failure.
+  generation_attempts: 2
+  downloads_dir: "library/music/tracks"
+
+pipeline:
+  default_target_duration_minutes: 60
+
+tools:
+  ffmpeg: "ffmpeg"
+  ffprobe: "ffprobe"
+
+audio:
+  sample_rate: 48000
+  channels: 2
+  crossfade_seconds: 3
+  master_codec: "pcm_s24le"
+
+video:
+  width: 1920
+  height: 1080
+  fps: 30
+  codec: "libx264"
+  profile: "high"
+  pixel_format: "yuv420p"
+  video_bitrate: "8M"
+  max_bitrate: "12M"
+  buffer_size: "16M"
+  audio_codec: "aac"
+  audio_bitrate: "384k"
+  audio_sample_rate: 48000
+  color_space: "bt709"
+
+thumbnail:
+  width: 3840
+  height: 2160
+  max_bytes: 2000000
+
+youtube:
+  upload_enabled: false
+  privacy_status: "private"
+  category_id: "10"
+  client_secrets_file: "secrets/youtube_client_secret.json"
+  token_file: "secrets/youtube_token.json"
+  wait_for_processing: true
+  processing_timeout_seconds: 7200
+
+output:
+  batches_dir: "output/batches"
