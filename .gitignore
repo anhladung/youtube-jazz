@@ -19,7 +19,6 @@ input/current_job/
 input/library_builds/
 library/music/tracks/
 library/music/.playwright-downloads/
-library/music/registry.json
 *.crdownload
 *.wav
 *.mp3

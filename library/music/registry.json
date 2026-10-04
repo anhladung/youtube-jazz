@@ -1,0 +1,675 @@
+{
+  "tracks": {
+    "track_13d853ec89e32480": {
+      "track_id": "track_13d853ec89e32480",
+      "file": "library/music/tracks/flow_prompt_001_v2_Harbor-Light-at-Midnight-Take-2.wav",
+      "source_prompt_id": "flow_prompt_001",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 2,
+      "title": "Harbor Light at Midnight (Take 2)",
+      "format": "wav",
+      "duration_seconds": 177.984,
+      "checksum_sha256": "13d853ec89e324807f9a0b306e03b74374331551863c673114ff2133a96e04ac",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "acoustic-trio",
+        "bpm": 52,
+        "lead_instrument": "felt_piano",
+        "supporting_instruments": [
+          "upright_bass",
+          "soft_brush_drums"
+        ],
+        "mood": [
+          "reflective",
+          "comforting"
+        ],
+        "melody_character": "sparse_descending_small_intervals",
+        "harmony_character": "warm_major_7_and_6_9",
+        "ambience": {
+          "level": "very_subtle",
+          "elements": [
+            "soft_window_rain",
+            "distant_harbor_water"
+          ]
+        },
+        "scene": "quiet_harbor_room_beside_a_dim_lamp",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|acoustic-trio|50-54|felt_piano|soft_brush_drums+upright_bass|comforting+reflective|sparse_descending_small_intervals|warm_major_7_and_6_9|very_subtle|harbor_room_dim_lamp",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_b9c0fec0bce1b9b6": {
+      "track_id": "track_b9c0fec0bce1b9b6",
+      "file": "library/music/tracks/flow_prompt_002_v1_Waterfront-Rain-Jazz-Take-2.wav",
+      "source_prompt_id": "flow_prompt_002",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 1,
+      "title": "Waterfront Rain Jazz (Take 2)",
+      "format": "wav",
+      "duration_seconds": 149.365,
+      "checksum_sha256": "b9c0fec0bce1b9b64bb1e13427d96c1adfdd017c6b5161aa7e37a098f6c0e28b",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "guitar-trio",
+        "bpm": 51,
+        "lead_instrument": "hollow_body_jazz_guitar",
+        "supporting_instruments": [
+          "upright_bass",
+          "soft_brush_drums"
+        ],
+        "mood": [
+          "mellow",
+          "reassuring"
+        ],
+        "melody_character": "gentle_repeated_two_bar_phrase",
+        "harmony_character": "major_9_and_minor_7",
+        "ambience": {
+          "level": "subtle",
+          "elements": [
+            "rain_on_wooden_awning"
+          ]
+        },
+        "scene": "closed_waterfront_lodging_room_under_rain",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|guitar-trio|50-54|hollow_body_jazz_guitar|soft_brush_drums+upright_bass|mellow+reassuring|gentle_repeated_two_bar_phrase|major_9_and_minor_7|subtle|rain_on_old_awning",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_5bff60e2de9e4ba5": {
+      "track_id": "track_5bff60e2de9e4ba5",
+      "file": "library/music/tracks/flow_prompt_003_v1_Harbor-Lights-at-53-BPM.wav",
+      "source_prompt_id": "flow_prompt_003",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 1,
+      "title": "Harbor Lights at 53 BPM",
+      "format": "wav",
+      "duration_seconds": 162.816,
+      "checksum_sha256": "5bff60e2de9e4ba5179351fd8b80dbb2e23b0d30eda3e2166a3d86577491cefe",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "vibraphone-quartet",
+        "bpm": 53,
+        "lead_instrument": "soft_vibraphone",
+        "supporting_instruments": [
+          "muted_piano",
+          "upright_bass",
+          "brushes_on_snare"
+        ],
+        "mood": [
+          "dreamy",
+          "comforting"
+        ],
+        "melody_character": "widely_spaced_single_notes",
+        "harmony_character": "gentle_major_7_and_minor_7",
+        "ambience": {
+          "level": "very_subtle",
+          "elements": [
+            "quiet_harbor_water"
+          ]
+        },
+        "scene": "distant_dock_lights_seen_from_a_dark_room",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|vibraphone-quartet|50-54|soft_vibraphone|brushes_on_snare+muted_piano+upright_bass|comforting+dreamy|widely_spaced_single_notes|gentle_major_7_and_minor_7|very_subtle|distant_dock_lights",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_93a29791cf38f9d9": {
+      "track_id": "track_93a29791cf38f9d9",
+      "file": "library/music/tracks/flow_prompt_003_v2_Harbor-After-Midnight.wav",
+      "source_prompt_id": "flow_prompt_003",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 2,
+      "title": "Harbor After Midnight",
+      "format": "wav",
+      "duration_seconds": 177.717,
+      "checksum_sha256": "93a29791cf38f9d97a00d0cab04309a6f74bc9a0061e1d434ddedbb4646b172d",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "vibraphone-quartet",
+        "bpm": 53,
+        "lead_instrument": "soft_vibraphone",
+        "supporting_instruments": [
+          "muted_piano",
+          "upright_bass",
+          "brushes_on_snare"
+        ],
+        "mood": [
+          "dreamy",
+          "comforting"
+        ],
+        "melody_character": "widely_spaced_single_notes",
+        "harmony_character": "gentle_major_7_and_minor_7",
+        "ambience": {
+          "level": "very_subtle",
+          "elements": [
+            "quiet_harbor_water"
+          ]
+        },
+        "scene": "distant_dock_lights_seen_from_a_dark_room",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|vibraphone-quartet|50-54|soft_vibraphone|brushes_on_snare+muted_piano+upright_bass|comforting+dreamy|widely_spaced_single_notes|gentle_major_7_and_minor_7|very_subtle|distant_dock_lights",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_4d512e424ad8bc8e": {
+      "track_id": "track_4d512e424ad8bc8e",
+      "file": "library/music/tracks/flow_prompt_004_v2_Harbor-After-Midnight.wav",
+      "source_prompt_id": "flow_prompt_004",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 2,
+      "title": "Harbor After Midnight",
+      "format": "wav",
+      "duration_seconds": 169.781,
+      "checksum_sha256": "4d512e424ad8bc8ede7a6a1619ef1d6fd9ad61b9bd6d91bc192e128a13b93429",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "bass-forward-trio",
+        "bpm": 50,
+        "lead_instrument": "upright_bass",
+        "supporting_instruments": [
+          "soft_piano",
+          "brushes_on_floor_tom"
+        ],
+        "mood": [
+          "grounded",
+          "comforting"
+        ],
+        "melody_character": "slow_round_bass_motif",
+        "harmony_character": "warm_6_9_and_gentle_dominant",
+        "ambience": {
+          "level": "minimal",
+          "elements": [
+            "wooden_room_creaks"
+          ]
+        },
+        "scene": "old_room_settling_after_midnight",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|bass-forward-trio|50-54|upright_bass|brushes_on_floor_tom+soft_piano|comforting+grounded|slow_round_bass_motif|warm_6_9_and_gentle_dominant|minimal|room_settling_after_midnight",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_9d04564de773d519": {
+      "track_id": "track_9d04564de773d519",
+      "file": "library/music/tracks/flow_prompt_005_v1_Midnight-Sailor-s-Rest.wav",
+      "source_prompt_id": "flow_prompt_005",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 1,
+      "title": "Midnight Sailor's Rest",
+      "format": "wav",
+      "duration_seconds": 166.837,
+      "checksum_sha256": "9d04564de773d5194914314a9f2de44c92fb95e0b5708507d87d01420f5f0fb7",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "clarinet-trio",
+        "bpm": 52,
+        "lead_instrument": "low_clarinet",
+        "supporting_instruments": [
+          "nylon_string_guitar",
+          "upright_bass"
+        ],
+        "mood": [
+          "tender",
+          "nostalgic"
+        ],
+        "melody_character": "breathlike_short_phrases",
+        "harmony_character": "warm_major_7_minor_7",
+        "ambience": {
+          "level": "minimal",
+          "elements": [
+            "soft_kettle_room_tone"
+          ]
+        },
+        "scene": "warm_drink_in_a_quiet_sailors_room",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|clarinet-trio|50-54|low_clarinet|nylon_string_guitar+upright_bass|nostalgic+tender|breathlike_short_phrases|warm_major_7_minor_7|minimal|steam_from_tin_cup",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_3b4b2b40bffdeb2d": {
+      "track_id": "track_3b4b2b40bffdeb2d",
+      "file": "library/music/tracks/flow_prompt_005_v2_Quiet-Room-After-Midnight.wav",
+      "source_prompt_id": "flow_prompt_005",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 2,
+      "title": "Quiet Room After Midnight",
+      "format": "wav",
+      "duration_seconds": 165.472,
+      "checksum_sha256": "3b4b2b40bffdeb2d1133117bf82bad3800c745cd97f4ddb13a63cdc062e66035",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "clarinet-trio",
+        "bpm": 52,
+        "lead_instrument": "low_clarinet",
+        "supporting_instruments": [
+          "nylon_string_guitar",
+          "upright_bass"
+        ],
+        "mood": [
+          "tender",
+          "nostalgic"
+        ],
+        "melody_character": "breathlike_short_phrases",
+        "harmony_character": "warm_major_7_minor_7",
+        "ambience": {
+          "level": "minimal",
+          "elements": [
+            "soft_kettle_room_tone"
+          ]
+        },
+        "scene": "warm_drink_in_a_quiet_sailors_room",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|clarinet-trio|50-54|low_clarinet|nylon_string_guitar+upright_bass|nostalgic+tender|breathlike_short_phrases|warm_major_7_minor_7|minimal|steam_from_tin_cup",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_5dd23cd8b7f9484b": {
+      "track_id": "track_5dd23cd8b7f9484b",
+      "file": "library/music/tracks/flow_prompt_006_v1_Waterfront-Rain.wav",
+      "source_prompt_id": "flow_prompt_006",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 1,
+      "title": "Waterfront Rain",
+      "format": "wav",
+      "duration_seconds": 159.84,
+      "checksum_sha256": "5dd23cd8b7f9484b707e346c9e95d0969f4ffb035fbf80acbaa29bafe0177eca",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "rhodes-trio",
+        "bpm": 54,
+        "lead_instrument": "fender_rhodes",
+        "supporting_instruments": [
+          "upright_bass",
+          "soft_brush_drums"
+        ],
+        "mood": [
+          "restful",
+          "reflective"
+        ],
+        "melody_character": "slow_held_chords_with_small_answering_notes",
+        "harmony_character": "major_9_and_6_9",
+        "ambience": {
+          "level": "subtle",
+          "elements": [
+            "fading_window_rain"
+          ]
+        },
+        "scene": "resting_on_an_old_sofa_after_midnight",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|rhodes-trio|50-54|fender_rhodes|soft_brush_drums+upright_bass|reflective+restful|slow_held_chords_with_small_answering_notes|major_9_and_6_9|subtle|old_sofa_fading_rain",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_1233f5b48c7532d1": {
+      "track_id": "track_1233f5b48c7532d1",
+      "file": "library/music/tracks/flow_prompt_006_v2_Resting-by-the-Harbor.wav",
+      "source_prompt_id": "flow_prompt_006",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 2,
+      "title": "Resting by the Harbor",
+      "format": "wav",
+      "duration_seconds": 173.547,
+      "checksum_sha256": "1233f5b48c7532d1e6067427c9714a479d18e89a6e14813b34c88cde0f0caf8b",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "rhodes-trio",
+        "bpm": 54,
+        "lead_instrument": "fender_rhodes",
+        "supporting_instruments": [
+          "upright_bass",
+          "soft_brush_drums"
+        ],
+        "mood": [
+          "restful",
+          "reflective"
+        ],
+        "melody_character": "slow_held_chords_with_small_answering_notes",
+        "harmony_character": "major_9_and_6_9",
+        "ambience": {
+          "level": "subtle",
+          "elements": [
+            "fading_window_rain"
+          ]
+        },
+        "scene": "resting_on_an_old_sofa_after_midnight",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|rhodes-trio|50-54|fender_rhodes|soft_brush_drums+upright_bass|reflective+restful|slow_held_chords_with_small_answering_notes|major_9_and_6_9|subtle|old_sofa_fading_rain",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_cd1a9e582bb58148": {
+      "track_id": "track_cd1a9e582bb58148",
+      "file": "library/music/tracks/flow_prompt_007_v1_Late-Night-Waterfront.wav",
+      "source_prompt_id": "flow_prompt_007",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 1,
+      "title": "Late Night Waterfront",
+      "format": "wav",
+      "duration_seconds": 177.227,
+      "checksum_sha256": "cd1a9e582bb581483d62bebcc054a027321d69cec2622ab7116180555ad01e62",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "piano-guitar-duo",
+        "bpm": 51,
+        "lead_instrument": "soft_upright_piano",
+        "supporting_instruments": [
+          "hollow_body_jazz_guitar"
+        ],
+        "mood": [
+          "patient",
+          "intimate"
+        ],
+        "melody_character": "call_and_response_fragments",
+        "harmony_character": "major_7_minor_7_gentle_dominant",
+        "ambience": {
+          "level": "minimal",
+          "elements": [
+            "distant_wall_clock"
+          ]
+        },
+        "scene": "quiet_hall_in_waterfront_lodging",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|piano-guitar-duo|50-54|soft_upright_piano|hollow_body_jazz_guitar|intimate+patient|call_and_response_fragments|major_7_minor_7_gentle_dominant|minimal|clock_above_quiet_hall",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_eeafd5d6698aa31c": {
+      "track_id": "track_eeafd5d6698aa31c",
+      "file": "library/music/tracks/flow_prompt_007_v2_Midnight-Lodging.wav",
+      "source_prompt_id": "flow_prompt_007",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 2,
+      "title": "Midnight Lodging",
+      "format": "wav",
+      "duration_seconds": 161.632,
+      "checksum_sha256": "eeafd5d6698aa31cda0f347eb140adf1af15c07dd6fcbf8e8096d697290979f0",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "piano-guitar-duo",
+        "bpm": 51,
+        "lead_instrument": "soft_upright_piano",
+        "supporting_instruments": [
+          "hollow_body_jazz_guitar"
+        ],
+        "mood": [
+          "patient",
+          "intimate"
+        ],
+        "melody_character": "call_and_response_fragments",
+        "harmony_character": "major_7_minor_7_gentle_dominant",
+        "ambience": {
+          "level": "minimal",
+          "elements": [
+            "distant_wall_clock"
+          ]
+        },
+        "scene": "quiet_hall_in_waterfront_lodging",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|piano-guitar-duo|50-54|soft_upright_piano|hollow_body_jazz_guitar|intimate+patient|call_and_response_fragments|major_7_minor_7_gentle_dominant|minimal|clock_above_quiet_hall",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_11115affebaa468c": {
+      "track_id": "track_11115affebaa468c",
+      "file": "library/music/tracks/flow_prompt_008_v1_Sleeping-Dock-Evening.wav",
+      "source_prompt_id": "flow_prompt_008",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 1,
+      "title": "Sleeping Dock Evening",
+      "format": "wav",
+      "duration_seconds": 172.619,
+      "checksum_sha256": "11115affebaa468cc7345c274c5190b0298f201d13be67022c5a123fa0885d28",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "guitar-bass-duo",
+        "bpm": 53,
+        "lead_instrument": "nylon_string_guitar",
+        "supporting_instruments": [
+          "upright_bass"
+        ],
+        "mood": [
+          "weathered",
+          "peaceful"
+        ],
+        "melody_character": "slow_arched_four_note_motif",
+        "harmony_character": "warm_6_9_and_major_7",
+        "ambience": {
+          "level": "very_subtle",
+          "elements": [
+            "soft_sea_breeze",
+            "occasional_dock_rope_creak"
+          ]
+        },
+        "scene": "open_window_over_a_sleeping_dock",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|guitar-bass-duo|50-54|nylon_string_guitar|upright_bass|peaceful+weathered|slow_arched_four_note_motif|warm_6_9_and_major_7|very_subtle|dock_ropes_soft_wind",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_8319035b7450465c": {
+      "track_id": "track_8319035b7450465c",
+      "file": "library/music/tracks/flow_prompt_008_v2_Harbor-Breeze-Duo.wav",
+      "source_prompt_id": "flow_prompt_008",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 2,
+      "title": "Harbor Breeze Duo",
+      "format": "wav",
+      "duration_seconds": 180.139,
+      "checksum_sha256": "8319035b7450465c8a0732629881b9a0ff01355181cea88a1c1013b609d03d3b",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "guitar-bass-duo",
+        "bpm": 53,
+        "lead_instrument": "nylon_string_guitar",
+        "supporting_instruments": [
+          "upright_bass"
+        ],
+        "mood": [
+          "weathered",
+          "peaceful"
+        ],
+        "melody_character": "slow_arched_four_note_motif",
+        "harmony_character": "warm_6_9_and_major_7",
+        "ambience": {
+          "level": "very_subtle",
+          "elements": [
+            "soft_sea_breeze",
+            "occasional_dock_rope_creak"
+          ]
+        },
+        "scene": "open_window_over_a_sleeping_dock",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|guitar-bass-duo|50-54|nylon_string_guitar|upright_bass|peaceful+weathered|slow_arched_four_note_motif|warm_6_9_and_major_7|very_subtle|dock_ropes_soft_wind",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_ff3fdfb4872bdb8b": {
+      "track_id": "track_ff3fdfb4872bdb8b",
+      "file": "library/music/tracks/flow_prompt_009_v1_Midnight-Harbor-Duo.wav",
+      "source_prompt_id": "flow_prompt_009",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 1,
+      "title": "Midnight Harbor Duo",
+      "format": "wav",
+      "duration_seconds": 173.589,
+      "checksum_sha256": "ff3fdfb4872bdb8b44fe57d3208cc837d9c833860cb95a9a3bf9795ec6dbf720",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "vibraphone-bass-duo",
+        "bpm": 50,
+        "lead_instrument": "soft_vibraphone",
+        "supporting_instruments": [
+          "upright_bass"
+        ],
+        "mood": [
+          "warm",
+          "contemplative"
+        ],
+        "melody_character": "low_pentatonic_fragments_with_long_decay",
+        "harmony_character": "major_7_and_gentle_minor_7",
+        "ambience": {
+          "level": "minimal",
+          "elements": [
+            "soft_iron_stove_room_tone"
+          ]
+        },
+        "scene": "small_iron_stove_in_a_harbor_room",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|vibraphone-bass-duo|50-54|soft_vibraphone|upright_bass|contemplative+warm|low_pentatonic_fragments_with_long_decay|major_7_and_gentle_minor_7|minimal|embers_iron_stove",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_c979be286594aeee": {
+      "track_id": "track_c979be286594aeee",
+      "file": "library/music/tracks/flow_prompt_010_v1_Harbor-Before-Dawn.wav",
+      "source_prompt_id": "flow_prompt_010",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 1,
+      "title": "Harbor Before Dawn",
+      "format": "wav",
+      "duration_seconds": 167.989,
+      "checksum_sha256": "c979be286594aeee07273ce5817f02dc4cd7454fcc8a2566c29eb683b4760ba5",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "piano-bass-duo",
+        "bpm": 52,
+        "lead_instrument": "soft_upright_piano",
+        "supporting_instruments": [
+          "bowed_and_plucked_upright_bass"
+        ],
+        "mood": [
+          "hopeful",
+          "restful"
+        ],
+        "melody_character": "simple_rising_then_returning_phrase",
+        "harmony_character": "major_9_6_9_soft_dominant",
+        "ambience": {
+          "level": "very_subtle",
+          "elements": [
+            "calm_pre_dawn_harbor_water"
+          ]
+        },
+        "scene": "last_dark_hour_before_the_harbor_wakes",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|piano-bass-duo|50-54|soft_upright_piano|bowed_and_plucked_upright_bass|hopeful+restful|simple_rising_then_returning_phrase|major_9_6_9_soft_dominant|very_subtle|before_harbor_wakes",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    },
+    "track_ebaf73075bc29b39": {
+      "track_id": "track_ebaf73075bc29b39",
+      "file": "library/music/tracks/flow_prompt_010_v2_Harbor-Before-Dawn.wav",
+      "source_prompt_id": "flow_prompt_010",
+      "source_visual_reference_id": "family_visual_01",
+      "flow_variant_index": 2,
+      "title": "Harbor Before Dawn",
+      "format": "wav",
+      "duration_seconds": 159.179,
+      "checksum_sha256": "ebaf73075bc29b3994a4a8a806c3205340c9d48292c0270858746f68c200041e",
+      "status": "available",
+      "track_metadata": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "family": "piano-bass-duo",
+        "bpm": 52,
+        "lead_instrument": "soft_upright_piano",
+        "supporting_instruments": [
+          "bowed_and_plucked_upright_bass"
+        ],
+        "mood": [
+          "hopeful",
+          "restful"
+        ],
+        "melody_character": "simple_rising_then_returning_phrase",
+        "harmony_character": "major_9_6_9_soft_dominant",
+        "ambience": {
+          "level": "very_subtle",
+          "elements": [
+            "calm_pre_dawn_harbor_water"
+          ]
+        },
+        "scene": "last_dark_hour_before_the_harbor_wakes",
+        "energy_profile": "flat_low_restrained",
+        "variation_signature": "vintage-jazz|late-night|piano-bass-duo|50-54|soft_upright_piano|bowed_and_plucked_upright_bass|hopeful+restful|simple_rising_then_returning_phrase|major_9_6_9_soft_dominant|very_subtle|before_harbor_wakes",
+        "novelty_check": "batch_only"
+      },
+      "usage_count": 0,
+      "used_in": [],
+      "last_used": null
+    }
+  },
+  "schema_version": 1
+}
