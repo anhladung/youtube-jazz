@@ -41,8 +41,8 @@ No hurry. No drama. No destination.
 
 ## Compilation notes
 
-- Every Flow submission consists of one compiled music prompt plus the `music-reference` image assigned to that prompt's family. The text and image must express the same branch, mood, ambience, brightness and broad setting.
-- Do not make the prompt narratively narrower than its family image. The image guides atmosphere; the text controls instrumentation, harmony, register and energy.
+- Every Flow submission consists of one compiled music prompt plus the shared static reference image at `skills/tao-anh-bia/assets/old-print-style-reference.png`, unless the caller explicitly supplies another image.
+- The image provides only a stable vintage visual cue. The text prompt remains authoritative for instrumentation, harmony, register, energy, branch, mood, ambience and scene.
 - Use a precise BPM within 50–54 for each track rather than leaving a range when Flow responds better to a single value.
 - Always identify the track as Vintage Jazz. Use `late-night` by default; use `noir` only when explicitly selected.
 - Replace the bracketed scene, emotion and harmony fields with one concrete branch-specific direction; never leave brackets in a final Flow prompt.

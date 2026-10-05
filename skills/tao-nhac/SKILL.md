@@ -33,11 +33,11 @@ Do not read novelty from chat history or conversational memory. Do not update `r
 
 - Allocate the requested tracks across meaningful `music_family` groups before writing prompts.
 - Lock metadata for every music family before writing individual prompts.
-- Call `$tao-anh-bia` in `music-reference` mode once per family by default. The image must express the same branch, mood, ambience, brightness and broad setting as that family's prompts.
-- Store family reference images under `input/library_builds/<build_id>/visual_references/`. They are internal Flow inputs, not final thumbnails and not concept-history records.
+- Do not generate a separate image for each music family. Reuse the project-wide static Flow reference at `skills/tao-anh-bia/assets/old-print-style-reference.png` for every prompt unless the caller explicitly supplies another image.
+- A library build may keep previously generated family images under `input/library_builds/<build_id>/visual_references/`, but they are archival and must not be selected automatically.
 - `outputs_per_prompt` is permanently `2`; do not infer it from prompt wording and do not expose it as a creative option.
 - Calculate `required_prompt_count = ceil(requested_track_count / 2)`. Thus 100 tracks require exactly 50 prompts. An odd target produces one declared surplus track.
-- Give every prompt a `prompt_id`, family metadata, `visual_reference_id`, `visual_reference_path` and `outputs_per_prompt: 2`.
+- Give every prompt a `prompt_id`, family metadata, the shared `visual_reference_id` and `visual_reference_path`, and `outputs_per_prompt: 2`.
 - Do not create two fake track records from one prompt before files actually exist.
 
 ### Stage B — ingest rendered tracks
@@ -176,7 +176,7 @@ For library builds, wrap prompts in a build manifest with:
 - fixed outputs per prompt: 2;
 - required prompt count;
 - family allocation;
-- one or more `music-reference` records per family;
+- one shared static `music-reference` record for the build;
 - prompt records;
 - expected track count;
 - surplus or shortfall;
