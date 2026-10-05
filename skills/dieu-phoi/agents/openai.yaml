@@ -1,0 +1,6 @@
+interface:
+  display_name: "Điều phối video Vintage Jazz"
+  short_description: "Đóng gói playlist, thumbnail và SEO thành episode"
+  default_prompt: "Dùng $dieu-phoi để đóng gói các episode Vintage Jazz từ thư viện nhạc hiện có."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,6 @@
+interface:
+  display_name: "SEO YouTube Vintage Jazz"
+  short_description: "Viết title và description đúng SEO của kênh"
+  default_prompt: "Dùng $seo-youtube để viết title và description tiếng Anh cho episode này."
+policy:
+  allow_implicit_invocation: true

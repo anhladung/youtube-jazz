@@ -1,0 +1,6 @@
+interface:
+  display_name: "Tạo nhạc Vintage Jazz"
+  short_description: "Lập prompt và thư viện nhạc Vintage Jazz"
+  default_prompt: "Dùng $tao-nhac để tạo kế hoạch và prompt nhạc Vintage Jazz cho yêu cầu này."
+policy:
+  allow_implicit_invocation: true

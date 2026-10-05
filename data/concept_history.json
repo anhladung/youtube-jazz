@@ -1,3 +1,48 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "video_id": "video_001",
+      "event": "uploaded",
+      "timestamp": "2026-10-05T05:16:25.253513+00:00",
+      "episode_profile": {
+        "genre": "vintage-jazz",
+        "mood_branch": "late-night",
+        "evidence": {
+          "dominant_family": "guitar-bass-duo",
+          "supporting_families": [
+            "vibraphone-quartet",
+            "piano-guitar-duo",
+            "clarinet-trio",
+            "rhodes-trio",
+            "piano-bass-duo"
+          ],
+          "dominant_moods": [
+            "comforting",
+            "restful",
+            "reflective"
+          ],
+          "ambience": [
+            "quiet harbor water",
+            "soft rain",
+            "dock rope creak",
+            "pre-dawn harbor water"
+          ]
+        },
+        "emotional_premise": "a weathered sailor permits himself one last comforting rest before the harbor wakes",
+        "time_anchor": "the last quiet hour before dawn",
+        "maritime_anchor": "a sleeping dock and calm harbor water beyond the watch-room doorway",
+        "location": "modest harbor watch room open to the dock",
+        "weather": "thin sea mist after the rain has faded",
+        "micro_story": "the old sailor warms his hands around a tin cup while the harbor waits for morning",
+        "character_situation": "seated beside a small iron stove before returning to duty",
+        "prop_logic": [
+          "tin cup for a warm drink in the watch room",
+          "iron stove for the cold pre-dawn hour",
+          "folded logbook for harbor duty"
+        ],
+        "visual_direction": "preserved mid-century hand-inked cel character with matte gouache harbor environment, cold navy dawn and restrained stove amber",
+        "seo_hook_type": "emotional line"
+      }
+    }
+  ]
 }

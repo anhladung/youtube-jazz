@@ -39,7 +39,7 @@ Asset chuẩn của project là [assets/popeye-character.jpg](assets/popeye-char
 
 ## Trách nhiệm
 
-- Tạo prompt tiếng Anh sẵn dùng cho công cụ sinh ảnh, mặc định 1920 × 1080, tỷ lệ 16:9, không chữ, không logo, không viền.
+- Tạo prompt tiếng Anh sẵn dùng cho công cụ sinh ảnh, mặc định 1920 × 1080, tỷ lệ 16:9 và không logo/viền. `music-reference` luôn không chữ; `episode-thumbnail` bắt buộc có đúng một câu quote tâm trạng ngắn theo quy tắc typography bên dưới.
 - Trong `music-reference`, đọc metadata của family rồi chuyển mood, ambience và emotional temperature thành một atmosphere image. Trong `episode-thumbnail`, đọc playlist/profile rồi phát triển thành visual story. Không minh họa nhạc cụ theo nghĩa đen.
 - Giữ Popeye1 nhất quán bằng character reference chuẩn tại `assets/popeye-character.jpg`. Không tuyên bố đã giữ đúng nhân vật nếu công cụ sinh ảnh không nhận được file reference này.
 - Với `episode-thumbnail`, tạo `visual_signature` và metadata để pipeline kiểm tra trùng. Với `music-reference`, tạo `family_visual_signature` để tránh hai family vô tình có hình ảnh giống hệt nhau.
@@ -66,11 +66,29 @@ Khi có `episode_profile`, không tạo một câu chuyện khác chỉ để h�
 3. Chọn địa điểm, thời tiết, thời gian, hành động, pose, góc máy, trang phục và props như một tổ hợp. Mỗi prop phải có lý do tự nhiên để tồn tại trong địa điểm và hành động đó. Tổ hợp này phải khác rõ rệt các records được cung cấp.
 4. Giữ character DNA và historical visual language; không giữ cố định một pose, quầy bar, cửa sổ hay bố cục từ prompt mẫu.
 5. Áp dụng vintage-print treatment chủ yếu vào nét vẽ và màu: mực thủ công hơi không đều, mảng màu matte, dry-brush nhẹ, halftone tiết chế và lệch đăng ký rất nhỏ. Nền giấy chỉ có grain tinh tế, sạch và được bảo quản tốt. Phủ một lớp tonal veil tối rất nhẹ để hạ độ sáng và thống nhất mood; không làm bạc màu, không giả sơn dầu cũ, không dùng giấy rách, giấy ố nặng, vết nứt hoặc grunge.
-6. Thiết kế silhouette, điểm sáng chính và đường nhìn rõ khi thu nhỏ trên mobile; texture không được làm mất mặt, mắt, bàn tay hay story prop chính.
-7. Compile prompt từ Master DNA + episode cụ thể + composition + lighting/palette + old-print treatment + negative constraints.
-8. Trả metadata và `visual_signature` cho pipeline.
+6. Với `episode-thumbnail`, viết một quote tiếng Anh 3–5 từ bám sát emotional premise; khóa nguyên văn quote, font family, placement và contrast treatment trước khi compile prompt.
+7. Thiết kế silhouette, điểm sáng chính, quote area và đường nhìn rõ khi thu nhỏ trên mobile; texture và chữ không được làm mất mặt, mắt, bàn tay hay story prop chính.
+8. Compile prompt từ Master DNA + episode cụ thể + quote/typography + composition + lighting/palette + old-print treatment + negative constraints.
+9. Trả metadata, quote spec và `visual_signature` cho pipeline.
 
 Trước khi compile prompt, thực hiện một `prop-context check`: với từng prop, hỏi “vật này có thường xuất hiện hoặc đang được sử dụng hợp lý tại địa điểm này không?”. Loại bỏ mọi prop chỉ được thêm để nhắc lại brand motif nhưng làm cảnh thiếu tự nhiên.
+
+## Quote và typography cho thumbnail
+
+Chỉ áp dụng cho `episode-thumbnail`. `music-reference` phải giữ hoàn toàn không chữ.
+
+- Mỗi thumbnail có đúng một quote tiếng Anh từ 3–5 từ. Đếm theo các từ cách nhau bằng khoảng trắng; không dùng câu một–hai từ và không vượt quá năm từ.
+- Quote phải là một emotional line tự nhiên, cô đọng từ `episode_profile`, gợi ký ức, sự chờ đợi, biển, thời gian hoặc cảm giác được nghỉ lại. Nó không phải title video thu nhỏ, keyword SEO, nhãn thể loại hay lời kêu gọi hành động.
+- Ưu tiên câu riêng tư và restrained như `the sea still remembers`, `stay a little longer`, `nothing left to prove`; đây là ví dụ về nhịp và độ dài, không phải danh sách để lặp máy móc.
+- Mặc định viết lowercase để đồng bộ title language của kênh. Không thêm dấu ngoặc kép quanh câu trên ảnh, không emoji, không dấu chấm than, không ALL CAPS và không dùng các từ clickbait như `relax`, `sleep`, `study`, `best` nếu profile không yêu cầu.
+- Render quote đúng nguyên văn và chỉ xuất hiện một lần. Kiểm tra chính tả, số từ và khả năng đọc sau khi tạo ảnh; không chấp nhận thumbnail có chữ sai, thiếu, lặp hoặc biến dạng.
+- Dùng kiểu chữ display serif cổ điển thanh mảnh hoặc serif editorial hơi condensed, lấy cảm hứng từ bìa đĩa giữa thế kỷ 20. Chỉ dùng weight `light` hoặc `regular`; tuyệt đối không bold, semibold, slab nặng hoặc stroke dày. Chữ có thể có nét in thủ công rất nhẹ nhưng vẫn sạch; không dùng script/calligraphy, blackletter, sans-serif hiện đại, neon, chrome, bevel, 3D, glow hoặc drop shadow nặng.
+- Typography phải nhỏ và tinh tế, đóng vai trò emotional whisper chứ không phải headline. Chiều cao toàn khối chữ thường chỉ khoảng 8–14% chiều cao ảnh; không để quote trở thành điểm thị giác lớn hơn gương mặt hoặc nguồn sáng chính.
+- Màu chữ mặc định là aged cream giảm sáng hoặc faded blue-cream; muted amber chỉ dùng khi nền đủ tối và không tranh điểm sáng với gương mặt. Chỉ cho phép shadow charcoal cực mảnh, độ tương phản vừa đủ; không outline dày, mảng nền, banner, sticker hoặc hộp chữ hiện đại.
+- Quote luôn nằm hoàn toàn trong nửa trên của thumbnail, trong vùng negative space tự nhiên ở upper-left hoặc upper-right, ưu tiên phía đối diện nhân vật. Tối đa hai dòng, line break theo cụm nghĩa; giữ safe margin tối thiểu khoảng 7% mỗi cạnh và không che mặt, mũ, tay, silhouette, story prop hoặc đường chân trời quan trọng.
+- Quote phải đọc được trên mobile dù kích thước nhỏ. Tạo khả năng đọc bằng nền yên, khoảng thở và tương phản tiết chế; nếu chưa rõ, sửa framing hoặc nền chữ thay vì tăng weight, phóng chữ quá lớn hay phủ chữ lên nhân vật.
+- Khi có history/collision context, tránh lặp nguyên quote gần đây. Quote không tự nó biến một composition cũ thành concept mới.
+- Nếu công cụ sinh ảnh không render quote chính xác, tạo hoặc giữ base illustration với quote area đã khóa rồi thêm đúng typography ở bước hậu kỳ; final `thumbnail.png` vẫn phải chứa quote đã duyệt.
 
 ## Quy tắc episode
 
@@ -184,12 +202,17 @@ lighting_source: single_dim_table_lamp
 relationship_cue: absent_recipient_implied_by_letter
 composition_notes: character_left_center_letter_and_hand_readable_on_mobile
 print_treatment: hand_inked|matte_gouache|subtle_paper_grain|restrained_halftone|slight_misregistration|light_dark_tonal_veil
-visual_signature: corner_bar_table|after_midnight_light_rain|reading_letter|seated_three_quarter|medium_close_high|navy_peacoat|letter+whiskey|table_lamp|absent_recipient|old_memories
+quote_text: "the sea still remembers"
+quote_word_count: 4
+typography: thin_classic_condensed_serif|regular|aged_cream|barely_visible_charcoal_shadow
+quote_placement: upper_right_negative_space_two_lines|small_scale
+text_validation: exact_and_mobile_legible
+visual_signature: corner_bar_table|after_midnight_light_rain|reading_letter|seated_three_quarter|medium_close_high|navy_peacoat|letter+whiskey|table_lamp|absent_recipient|old_memories|the_sea_still_remembers
 novelty_check: not_checked
 prompt: "..."
 ```
 
-Prompt phải mô tả một ảnh hoàn chỉnh, không chứa metadata syntax. Với batch, thêm tóm tắt sự phân bổ episode và collision risks để pipeline duyệt.
+Prompt phải mô tả một ảnh hoàn chỉnh, ghi quote nguyên văn trong dấu ngoặc kép và không chứa metadata syntax khác. Với batch, thêm tóm tắt sự phân bổ episode, quote và collision risks để pipeline duyệt.
 
 Với `music-reference`, trả object gọn hơn:
 

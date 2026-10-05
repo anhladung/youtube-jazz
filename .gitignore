@@ -13,6 +13,7 @@ config.local.yaml
 # Runtime state and generated media
 logs/
 temp/
+data/youtube_upload_queue.csv
 output/
 input/batches/
 input/current_job/

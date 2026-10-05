@@ -47,13 +47,20 @@ thumbnail:
   max_bytes: 2000000
 
 youtube:
-  upload_enabled: false
+  upload_method: "chrome_persistent_profile"
+  queue_file: "data/youtube_upload_queue.csv"
+  schedule_timezone: "Asia/Saigon"
+  daily_schedule_times: ["08:00", "20:00"]
+  # Operational buffer for HD processing, copyright checks, and monetization review.
+  # This is not treated as an algorithm-ranking advantage.
+  minimum_schedule_lead_minutes: 1440
+  action_delay_seconds: 4.0
+  post_upload_settle_seconds: 180
+  chrome_path: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  profile_dir: "C:\\flow_auto_profile_01"
+  channel_url: "https://studio.youtube.com/channel/UCCsc1G6jJJeNeok-m5AIvTQ"
   privacy_status: "private"
   category_id: "10"
-  client_secrets_file: "secrets/youtube_client_secret.json"
-  token_file: "secrets/youtube_token.json"
-  wait_for_processing: true
-  processing_timeout_seconds: 7200
 
 output:
   batches_dir: "output/batches"

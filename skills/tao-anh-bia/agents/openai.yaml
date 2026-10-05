@@ -1,0 +1,6 @@
+interface:
+  display_name: "Tạo ảnh bìa Vintage Jazz"
+  short_description: "Tạo ảnh vibe và thumbnail Popeye Vintage Jazz"
+  default_prompt: "Dùng $tao-anh-bia để thiết kế ảnh 16:9 đúng visual DNA của kênh."
+policy:
+  allow_implicit_invocation: true

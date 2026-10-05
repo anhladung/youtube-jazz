@@ -8,8 +8,8 @@ Không dùng ảnh style reference. Old-print style, palette, texture và printm
 
 ## Mode behavior
 
-- `music-reference`: compile a family-level atmosphere image for Google Flow Music. Emphasize environment, palette, weather, branch and emotional temperature. Keep the scene broad and reusable across all prompts in that family. Do not add an episode-specific micro-story, SEO hook or unique narrative prop. This is an internal generation reference, never the final YouTube thumbnail and never a concept-history entry.
-- `episode-thumbnail`: compile a specific visual story from a locked playlist and `episode_profile`. Apply episode novelty, prop logic and mobile readability. This is the publishable thumbnail.
+- `music-reference`: compile a family-level atmosphere image for Google Flow Music. Emphasize environment, palette, weather, branch and emotional temperature. Keep the scene broad and reusable across all prompts in that family. Do not add an episode-specific micro-story, SEO hook, unique narrative prop or any text. This is an internal generation reference, never the final YouTube thumbnail and never a concept-history entry.
+- `episode-thumbnail`: compile a specific visual story from a locked playlist and `episode_profile`. Apply episode novelty, prop logic, mobile readability and one short mood quote rendered in the final image. This is the publishable thumbnail.
 
 Both modes use only the same Popeye1 character reference. The old-print language comes exclusively from the written prompt. In `music-reference`, Popeye1 may appear as a quiet identity anchor, but the atmosphere must remain the primary information sent to Flow.
 
@@ -19,7 +19,11 @@ Both modes use only the same Popeye1 character reference. The old-print language
 CREATE A 16:9 YOUTUBE THUMBNAIL FOR A SLOW LATE-NIGHT JAZZ MUSIC CHANNEL.
 
 1920 × 1080.
-NO TEXT. NO LOGO. NO BORDER.
+NO LOGO. NO BORDER.
+
+TEXT MODE:
+For `music-reference`, render NO TEXT of any kind.
+For `episode-thumbnail`, render exactly one short English mood quote: "[EXACT 3–5 WORD QUOTE]". Reproduce it verbatim once, with correct spelling. Use lowercase classic mid-century editorial serif or a lightly condensed display serif, strictly LIGHT or REGULAR weight. The lettering must be small, thin, quiet and refined—an emotional whisper, never a bold headline. Keep the total text block around 8–14 percent of the image height. Place the entire quote only in the UPPER HALF of the frame, in deliberately reserved upper-left or upper-right negative space opposite the character when possible, with at least 7 percent safe margin from every edge. Use no more than two lines and break the lines by meaning. Use subdued aged cream or faded blue-cream with at most a barely visible charcoal shadow; create legibility through calm background and spacing, not bold weight, thick outline or oversized type. Do not use quotation marks in the rendered artwork, bold or semibold type, heavy slab serif, modern sans-serif, script, calligraphy, blackletter, neon, chrome, bevel, 3D lettering, glow, heavy drop shadow, outline, sticker, ribbon, background panel, or modern text box. Never cover the face, cap, hands, silhouette, primary story prop or important horizon detail.
 
 Use the supplied `assets/popeye-character.jpg` image as the PRIMARY CHARACTER REFERENCE. Preserve his recognizable early-cartoon construction: large rounded chin, prominent curved nose, one naturally squinted eye, small ears, oversized muscular forearms, compact sailor proportions, white sailor cap with black band, and small pipe. Keep him an old, weathered, calm sailor with many stories—not a heroic muscle-flexing figure. Adapt his clothing, pose, and expression to the episode without losing the reference character's identity. Because the reference establishes his face most reliably from a near-frontal view, keep the face frontal or in a gentle three-quarter turn by default. Do not force a full 90-degree profile, back view, rear three-quarter view, or extreme head angle. When he looks toward the sea or an off-frame object, turn the torso three-quarter and shift the eyes or head only slightly, preserving the referenced facial construction. A near-frontal face does not require eye contact with the viewer.
 
@@ -30,7 +34,7 @@ EPISODE:
 [Describe one distinct location, moment, action, pose, expression, wardrobe, props, weather, relationship cue, and micro-story connected to this video's musical mood. Every prop must naturally belong to the location and action.]
 
 COMPOSITION:
-[Specify camera angle, framing, character placement, readable silhouette, focal path, negative space, and which story props must remain legible at mobile size.]
+[Specify camera angle, framing, character placement, readable silhouette, focal path, a deliberate quote-safe negative-space area, and which story props must remain legible at mobile size.]
 
 THE ENTIRE IMAGE MUST USE A MID-20TH-CENTURY ILLUSTRATION LANGUAGE WITH CONTEMPORARY ART DIRECTION AND THUMBNAIL CLARITY. Do not create a generic modern digital painting with a vintage filter or place an old cartoon character inside a modern cinematic scene. Character, environment, props, furniture, weather, and lighting must share the same visual language, while the final image remains clean, intentional, and readable to a modern audience.
 
@@ -62,12 +66,14 @@ Maintain classic cel-style character rendering: bold hand-inked contours, simple
 
 ABSOLUTELY AVOID: 3D, CGI, 3D cartoon, photorealism, hyperrealism, generic modern digital painting, Pixar, modern Disney animation, anime, clean vector art, perfectly smooth gradients, airbrushed polish, uniform digital grain, one-click sepia filters, heavy yellowed paper, dirty paper, cracked paper, torn paper, torn or distressed borders, archive damage, scratches, scuffs, excessive grunge, horror decay, old-oil-paint deterioration, forced full-profile or back-view character angles, invented side-view facial anatomy, Unreal Engine, Octane render, ray tracing, HDR, volumetric cinematic lighting, bloom, glossy surfaces, plastic textures, perfect reflections, photographic depth of field, neon, vivid colors, modern orange-and-teal grading, luxury interiors, modern furniture or clothing, busy compositions, excessive props, giant saxophones, performing jazz bands, party energy, heroic poses, aggression, crying, extreme depression, pirate imagery, tropical beaches, adventure scenes, giant moons, dramatic oceans, storms, and spectacular landscapes.
 
-FINAL TARGET: a vintage-inspired 2D jazz illustration featuring the same recognizable Popeye1 sailor in a clearly new episode, combining classic hand-drawn and printmaking character with clear contemporary composition. It should feel tactile, matte, subtly imperfect, and unmistakably handmade, with only a light dark tonal veil over the finished image. No torn-paper effect and no physical deterioration. Quiet. Dark. Warm. Nostalgic. Intimate. Bittersweet. Comforting.
+FINAL TARGET: a vintage-inspired 2D jazz illustration featuring the same recognizable Popeye1 sailor in a clearly new episode, combining classic hand-drawn and printmaking character with clear contemporary composition. For an episode thumbnail, the exact short quote must feel integrated into the same preserved mid-century print language and remain immediately readable on mobile. It should feel tactile, matte, subtly imperfect, and unmistakably handmade, with only a light dark tonal veil over the finished image. No torn-paper effect and no physical deterioration. Quiet. Dark. Warm. Nostalgic. Intimate. Bittersweet. Comforting.
 ```
 
 ## Compilation rules
 
 - Replace every bracketed field with concrete episode content; never leave placeholders in the final prompt.
+- For `episode-thumbnail`, derive one exact English quote of 3–5 words from the locked emotional premise before writing the prompt. Spell it verbatim in the prompt, reserve a small quiet text area entirely in the upper half and verify the rendered result. Reject bold, semibold, oversized or lower-half typography even when the spelling is correct. If generation misspells, duplicates, deforms or overemphasizes the quote, correct it through a targeted edit or deterministic typography post-production before accepting the final thumbnail.
+- For `music-reference`, remove the episode quote block entirely and keep the image text-free.
 - During actual image generation, pass only `assets/popeye-character.jpg` as the referenced image. Do not attach any style-reference, wardrobe-reference or color-reference image. Character consistency comes from the image reference; wardrobe and color direction come from the written prompt.
 - Do not inherit the seated-at-bar pose, harbor window or whiskey-in-hand composition unless that is the chosen new episode.
 - Perform a prop-context check before generation. Remove any object that does not naturally belong to the location, weather and action.

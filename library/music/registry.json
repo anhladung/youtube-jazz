@@ -39,9 +39,11 @@
         "variation_signature": "vintage-jazz|late-night|acoustic-trio|50-54|felt_piano|soft_brush_drums+upright_bass|comforting+reflective|sparse_descending_small_intervals|warm_major_7_and_6_9|very_subtle|harbor_room_dim_lamp",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_b9c0fec0bce1b9b6": {
       "track_id": "track_b9c0fec0bce1b9b6",
@@ -81,9 +83,11 @@
         "variation_signature": "vintage-jazz|late-night|guitar-trio|50-54|hollow_body_jazz_guitar|soft_brush_drums+upright_bass|mellow+reassuring|gentle_repeated_two_bar_phrase|major_9_and_minor_7|subtle|rain_on_old_awning",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_5bff60e2de9e4ba5": {
       "track_id": "track_5bff60e2de9e4ba5",
@@ -124,9 +128,11 @@
         "variation_signature": "vintage-jazz|late-night|vibraphone-quartet|50-54|soft_vibraphone|brushes_on_snare+muted_piano+upright_bass|comforting+dreamy|widely_spaced_single_notes|gentle_major_7_and_minor_7|very_subtle|distant_dock_lights",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_93a29791cf38f9d9": {
       "track_id": "track_93a29791cf38f9d9",
@@ -167,9 +173,11 @@
         "variation_signature": "vintage-jazz|late-night|vibraphone-quartet|50-54|soft_vibraphone|brushes_on_snare+muted_piano+upright_bass|comforting+dreamy|widely_spaced_single_notes|gentle_major_7_and_minor_7|very_subtle|distant_dock_lights",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_4d512e424ad8bc8e": {
       "track_id": "track_4d512e424ad8bc8e",
@@ -209,9 +217,11 @@
         "variation_signature": "vintage-jazz|late-night|bass-forward-trio|50-54|upright_bass|brushes_on_floor_tom+soft_piano|comforting+grounded|slow_round_bass_motif|warm_6_9_and_gentle_dominant|minimal|room_settling_after_midnight",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_9d04564de773d519": {
       "track_id": "track_9d04564de773d519",
@@ -251,9 +261,11 @@
         "variation_signature": "vintage-jazz|late-night|clarinet-trio|50-54|low_clarinet|nylon_string_guitar+upright_bass|nostalgic+tender|breathlike_short_phrases|warm_major_7_minor_7|minimal|steam_from_tin_cup",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_3b4b2b40bffdeb2d": {
       "track_id": "track_3b4b2b40bffdeb2d",
@@ -293,9 +305,11 @@
         "variation_signature": "vintage-jazz|late-night|clarinet-trio|50-54|low_clarinet|nylon_string_guitar+upright_bass|nostalgic+tender|breathlike_short_phrases|warm_major_7_minor_7|minimal|steam_from_tin_cup",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_5dd23cd8b7f9484b": {
       "track_id": "track_5dd23cd8b7f9484b",
@@ -335,9 +349,11 @@
         "variation_signature": "vintage-jazz|late-night|rhodes-trio|50-54|fender_rhodes|soft_brush_drums+upright_bass|reflective+restful|slow_held_chords_with_small_answering_notes|major_9_and_6_9|subtle|old_sofa_fading_rain",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_1233f5b48c7532d1": {
       "track_id": "track_1233f5b48c7532d1",
@@ -377,9 +393,11 @@
         "variation_signature": "vintage-jazz|late-night|rhodes-trio|50-54|fender_rhodes|soft_brush_drums+upright_bass|reflective+restful|slow_held_chords_with_small_answering_notes|major_9_and_6_9|subtle|old_sofa_fading_rain",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_cd1a9e582bb58148": {
       "track_id": "track_cd1a9e582bb58148",
@@ -418,9 +436,11 @@
         "variation_signature": "vintage-jazz|late-night|piano-guitar-duo|50-54|soft_upright_piano|hollow_body_jazz_guitar|intimate+patient|call_and_response_fragments|major_7_minor_7_gentle_dominant|minimal|clock_above_quiet_hall",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_eeafd5d6698aa31c": {
       "track_id": "track_eeafd5d6698aa31c",
@@ -459,9 +479,11 @@
         "variation_signature": "vintage-jazz|late-night|piano-guitar-duo|50-54|soft_upright_piano|hollow_body_jazz_guitar|intimate+patient|call_and_response_fragments|major_7_minor_7_gentle_dominant|minimal|clock_above_quiet_hall",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_11115affebaa468c": {
       "track_id": "track_11115affebaa468c",
@@ -501,9 +523,11 @@
         "variation_signature": "vintage-jazz|late-night|guitar-bass-duo|50-54|nylon_string_guitar|upright_bass|peaceful+weathered|slow_arched_four_note_motif|warm_6_9_and_major_7|very_subtle|dock_ropes_soft_wind",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_8319035b7450465c": {
       "track_id": "track_8319035b7450465c",
@@ -543,9 +567,11 @@
         "variation_signature": "vintage-jazz|late-night|guitar-bass-duo|50-54|nylon_string_guitar|upright_bass|peaceful+weathered|slow_arched_four_note_motif|warm_6_9_and_major_7|very_subtle|dock_ropes_soft_wind",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_ff3fdfb4872bdb8b": {
       "track_id": "track_ff3fdfb4872bdb8b",
@@ -584,9 +610,11 @@
         "variation_signature": "vintage-jazz|late-night|vibraphone-bass-duo|50-54|soft_vibraphone|upright_bass|contemplative+warm|low_pentatonic_fragments_with_long_decay|major_7_and_gentle_minor_7|minimal|embers_iron_stove",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_c979be286594aeee": {
       "track_id": "track_c979be286594aeee",
@@ -625,9 +653,11 @@
         "variation_signature": "vintage-jazz|late-night|piano-bass-duo|50-54|soft_upright_piano|bowed_and_plucked_upright_bass|hopeful+restful|simple_rising_then_returning_phrase|major_9_6_9_soft_dominant|very_subtle|before_harbor_wakes",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     },
     "track_ebaf73075bc29b39": {
       "track_id": "track_ebaf73075bc29b39",
@@ -666,9 +696,11 @@
         "variation_signature": "vintage-jazz|late-night|piano-bass-duo|50-54|soft_upright_piano|bowed_and_plucked_upright_bass|hopeful+restful|simple_rising_then_returning_phrase|major_9_6_9_soft_dominant|very_subtle|before_harbor_wakes",
         "novelty_check": "batch_only"
       },
-      "usage_count": 0,
-      "used_in": [],
-      "last_used": null
+      "usage_count": 1,
+      "used_in": [
+        "video_001"
+      ],
+      "last_used": "video_001"
     }
   },
   "schema_version": 1
