@@ -1,3 +1,60 @@
+default_channel: "vintage_jazz"
+
+# The Python engine is shared, while every stateful path is owned by exactly
+# one channel. Existing Vintage Jazz locations stay unchanged for compatibility.
+channels:
+  vintage_jazz:
+    label: "Vintage Jazz"
+    expected_genre: "vintage-jazz"
+    paths:
+      library_builds: "input/library_builds"
+      registry: "library/music/registry.json"
+      tracks: "library/music/tracks"
+      batches_input: "input/batches"
+      batches_output: "output/batches"
+      data: "data"
+      youtube_queue: "data/youtube_upload_queue.csv"
+    overrides:
+      flow:
+        downloads_dir: "library/music/tracks"
+      output:
+        batches_dir: "output/batches"
+      livestream:
+        registry: "library/music/registry.json"
+        thumbnails_dir: "input/batches"
+        runtime_playlist: "temp/vintage_jazz/livestream_playlist.txt"
+        stream_key_file: "secrets/vintage_jazz_youtube_stream_key.txt"
+
+  relax_music:
+    label: "Relax Music"
+    expected_genre: "relax-music"
+    paths:
+      library_builds: "input/relax_music/library_builds"
+      registry: "library/relax_music/registry.json"
+      tracks: "library/relax_music/tracks"
+      batches_input: "input/relax_batches"
+      batches_output: "output/relax_music/batches"
+      data: "data/relax_music"
+      youtube_queue: "data/relax_music/youtube_upload_queue.csv"
+    overrides:
+      pipeline:
+        default_target_duration_minutes: 150
+      flow:
+        downloads_dir: "library/relax_music/tracks"
+      output:
+        batches_dir: "output/relax_music/batches"
+      livestream:
+        registry: "library/relax_music/registry.json"
+        thumbnails_dir: "input/relax_batches"
+        runtime_playlist: "temp/relax_music/livestream_playlist.txt"
+        stream_key_file: "secrets/relax_music_youtube_stream_key.txt"
+      youtube:
+        # Deliberately disabled until the Relax Music Studio channel URL and
+        # a separate Chrome profile are configured in config.local.yaml.
+        enabled: false
+        profile_dir: null
+        channel_url: null
+
 flow:
   url: "https://www.flowmusic.app/"
   # Open this AdsPower profile manually before running the pipeline.
@@ -40,6 +97,31 @@ video:
   audio_bitrate: "384k"
   audio_sample_rate: 48000
   color_space: "bt709"
+
+# Independent 24/7 YouTube stream. The stream key is read only from the
+# YOUTUBE_STREAM_KEY environment variable and must never be stored here.
+livestream:
+  registry: "library/music/registry.json"
+  # Leave blank to rotate all thumbnail.png files found under input/batches.
+  visual_path: null
+  runtime_playlist: "temp/livestream_playlist.txt"
+  visual_duration_minutes: 30
+  stream_url: "rtmps://a.rtmps.youtube.com/live2"
+  # Show a masked key dialog whenever the PyCharm Run button is used.
+  prompt_for_stream_key: true
+  stream_key_file: "secrets/youtube_stream_key.txt"
+  # Most current channel images are native 1280x720. Streaming at native size
+  # is sharper and leaves substantially more CPU/network headroom than upscaling.
+  width: 1280
+  height: 720
+  fps: 30
+  video_bitrate: "4M"
+  min_bitrate: "4M"
+  max_bitrate: "4M"
+  buffer_size: "8M"
+  audio_bitrate: "128k"
+  restart_delay_seconds: 5
+  max_restart_delay_seconds: 60
 
 thumbnail:
   width: 3840

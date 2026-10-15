@@ -28,7 +28,8 @@ def sha256_file(path: Path) -> str:
 
 
 def ingest_flow_queue(
-    queue_path: Path, registry_path: Path = REGISTRY_PATH
+    queue_path: Path, registry_path: Path = REGISTRY_PATH,
+    *, channel_id: str | None = None, expected_genre: str | None = None,
 ) -> list[str]:
     """Register real completed outputs; returns newly added track IDs."""
     queue = load_json(queue_path)
@@ -37,6 +38,11 @@ def ingest_flow_queue(
         raise ValueError(f"Invalid Flow queue: {queue_path}")
 
     registry = load_json(registry_path) if registry_path.is_file() else {"tracks": {}}
+    existing_channel = registry.get("channel_id")
+    if existing_channel and channel_id and existing_channel != channel_id:
+        raise ValueError(
+            f"Registry {registry_path} belongs to {existing_channel}, not {channel_id}"
+        )
     tracks = registry.setdefault("tracks", {})
     checksum_index = {
         record.get("checksum_sha256"): track_id
@@ -48,6 +54,13 @@ def ingest_flow_queue(
     for prompt in prompts:
         if prompt.get("status") not in {"completed", "completed_partial"}:
             continue
+        metadata = prompt.get("track_metadata") or {}
+        genre = str(metadata.get("genre") or "")
+        if expected_genre and genre and genre != expected_genre:
+            raise ValueError(
+                f"Prompt {prompt.get('prompt_id')} genre '{genre}' does not match "
+                f"channel genre '{expected_genre}'"
+            )
         outputs = prompt.get("outputs") or []
         for output in outputs:
             file_value = output.get("file")
@@ -87,6 +100,10 @@ def ingest_flow_queue(
             added.append(track_id)
 
     registry["schema_version"] = 1
+    if channel_id:
+        registry["channel_id"] = channel_id
+    if expected_genre:
+        registry["expected_genre"] = expected_genre
     atomic_write_json(registry_path, registry)
     return added
 

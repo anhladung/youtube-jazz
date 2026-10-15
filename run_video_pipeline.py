@@ -9,14 +9,19 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from pipeline.common.config import PROJECT_ROOT, expand_path, load_config
+from pipeline.common.channels import (
+    ChannelProfile,
+    assert_channel,
+    assert_playlist_registry,
+    resolve_channel,
+)
+from pipeline.common.config import expand_path, load_config
 from pipeline.common.validator import atomic_write_json, load_json, require_file
 from pipeline.music.audio_builder import build_audio_master
 from pipeline.music.playlist_builder import load_locked_playlist
 from pipeline.video.video_builder import prepare_thumbnail, render_video, validate_video
 
 
-INPUT_ROOT = PROJECT_ROOT / "input" / "batches"
 TERMINAL_STATUSES = {"ready_for_upload", "uploaded", "needs_attention", "library_gap"}
 
 
@@ -32,6 +37,18 @@ def video_filename(title: str, video_id: str) -> str:
     slug = slug[:120].rstrip("-") or "untitled-video"
     safe_video_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", video_id).strip("-")
     return f"{slug}-{safe_video_id}.mp4"
+
+
+def write_youtube_manual_text(path: Path, metadata: dict[str, Any]) -> None:
+    """Write only the title and description for quick manual upload."""
+    title = str(metadata.get("title") or "").strip()
+    description = str(metadata.get("description") or "").strip()
+    if not title or not description:
+        raise ValueError("youtube.json must contain a title and description")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(f"{title}\n\n{description}\n", encoding="utf-8")
+    temporary.replace(path)
 
 
 def resolve_job_file(job_dir: Path, batch_dir: Path, value: str) -> Path:
@@ -65,14 +82,46 @@ def update_manifest(manifest_path: Path, video_id: str, status: str) -> None:
     atomic_write_json(manifest_path, manifest)
 
 
-def process_job(manifest_path: Path, item: dict[str, Any], config: dict[str, Any]) -> None:
+def manifest_has_actionable_jobs(manifest_path: Path) -> bool:
+    """Return True when a batch contains at least one job the renderer can run."""
+    manifest = load_json(manifest_path)
+    batch_dir = manifest_path.parent
+    for item in manifest.get("jobs", []):
+        try:
+            job_path = resolve_job_file(batch_dir, batch_dir, str(item["path"]))
+            status = str(load_json(job_path).get("status", item.get("status", "unknown")))
+        except (KeyError, FileNotFoundError, ValueError):
+            status = str(item.get("status", "unknown"))
+        if status not in TERMINAL_STATUSES:
+            return True
+    return False
+
+
+def latest_actionable_manifest(input_root: Path) -> Path | None:
+    """Select the newest batch that still has work, for one-click IDE runs."""
+    manifests = sorted(input_root.glob("*/batch_manifest.json"), reverse=True)
+    return next((path for path in manifests if manifest_has_actionable_jobs(path)), None)
+
+
+def process_job(manifest_path: Path, item: dict[str, Any], profile: ChannelProfile) -> None:
+    config = profile.config
     batch_dir = manifest_path.parent
     job_path = resolve_job_file(batch_dir, batch_dir, str(item["path"]))
     job_dir = job_path.parent
     job = load_json(job_path)
+    assert_channel(job, profile, job_path)
     video_id = str(job.get("video_id") or item.get("video_id"))
     status = str(job.get("status", "unknown"))
     if status in TERMINAL_STATUSES:
+        if status in {"ready_for_upload", "uploaded"}:
+            files = job.get("files", {})
+            metadata_path = require_file(
+                resolve_job_file(job_dir, batch_dir, files["youtube_metadata"]),
+                "YouTube metadata",
+            )
+            out_root = profile.batches_output_dir / str(job.get("batch_id", batch_dir.name)) / video_id
+            if any(out_root.glob("*.mp4")):
+                write_youtube_manual_text(out_root / "youtube_manual.txt", load_json(metadata_path))
         print(f"[{video_id}] skipped ({status})")
         return
     check = job.get("consistency_check", {})
@@ -87,12 +136,14 @@ def process_job(manifest_path: Path, item: dict[str, Any], config: dict[str, Any
     thumbnail_source = require_file(resolve_job_file(job_dir, batch_dir, files["thumbnail_image"]), "thumbnail")
     metadata_path = require_file(resolve_job_file(job_dir, batch_dir, files["youtube_metadata"]), "YouTube metadata")
     playlist, tracks = load_locked_playlist(playlist_path)
+    assert_playlist_registry(playlist, profile, playlist_path)
     metadata = load_json(metadata_path)
-    out_root = expand_path(config.get("output", {}).get("batches_dir", "output/batches")) / str(job.get("batch_id", batch_dir.name)) / video_id
+    out_root = profile.batches_output_dir / str(job.get("batch_id", batch_dir.name)) / video_id
     audio_path = out_root / "audio_master.wav"
     thumbnail_path = out_root / "thumbnail.jpg"
     video_path = out_root / video_filename(str(metadata.get("title") or ""), video_id)
     report_path = out_root / "validation.json"
+    youtube_manual_path = out_root / "youtube_manual.txt"
     tools = config.get("tools", {})
 
     # Failed FFmpeg runs can leave a non-empty but truncated file. Never treat
@@ -113,11 +164,12 @@ def process_job(manifest_path: Path, item: dict[str, Any], config: dict[str, Any
         if not video_path.is_file() or video_path.stat().st_size == 0:
             set_status(job_path, "rendering_video")
             print(f"[{video_id}] rendering YouTube-ready MP4")
-            render_video(thumbnail_path, audio_path, video_path, config=config.get("video", {}), ffmpeg_value=tools.get("ffmpeg", "ffmpeg"))
+            render_video(thumbnail_path, audio_path, video_path, config=config.get("video", {}), ffmpeg_value=tools.get("ffmpeg", "ffmpeg"), ffprobe_value=tools.get("ffprobe", "ffprobe"))
         set_status(job_path, "validating")
         report = validate_video(video_path, config=config.get("video", {}), ffmpeg_value=tools.get("ffmpeg", "ffmpeg"), ffprobe_value=tools.get("ffprobe", "ffprobe"))
         atomic_write_json(report_path, report)
-        set_status(job_path, "ready_for_upload", outputs={"audio": str(audio_path), "thumbnail": str(thumbnail_path), "video": str(video_path), "validation": str(report_path)})
+        write_youtube_manual_text(youtube_manual_path, metadata)
+        set_status(job_path, "ready_for_upload", outputs={"audio": str(audio_path), "thumbnail": str(thumbnail_path), "video": str(video_path), "validation": str(report_path), "youtube_manual_text": str(youtube_manual_path)})
         update_manifest(manifest_path, video_id, "ready_for_upload")
         print(f"[{video_id}] ready for upload: {video_path}")
     except Exception as exc:
@@ -132,17 +184,25 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Build and validate ready episode jobs")
     parser.add_argument("--batch", type=Path, help="Specific batch_manifest.json; default scans input/batches")
     parser.add_argument("--config", type=Path)
+    parser.add_argument("--channel", default=None, help="vintage-jazz or relax-music")
     args = parser.parse_args()
     config = load_config(args.config)
-    manifests = [args.batch.resolve()] if args.batch else sorted(INPUT_ROOT.glob("*/batch_manifest.json"))
+    profile = resolve_channel(config, args.channel)
+    print(f"Channel: {profile.label} [{profile.channel_id}]")
+    if args.batch:
+        manifests = [args.batch.resolve()]
+    else:
+        latest = latest_actionable_manifest(profile.batches_input_dir)
+        manifests = [latest] if latest else []
     if not manifests:
-        print(f"No episode batches found under: {INPUT_ROOT}")
+        print(f"No actionable episode batches found under: {profile.batches_input_dir}")
         return
     for manifest_path in manifests:
         manifest = load_json(manifest_path)
+        assert_channel(manifest, profile, manifest_path)
         print(f"Processing batch {manifest.get('batch_id', manifest_path.parent.name)} ({len(manifest.get('jobs', []))} jobs)")
         for item in manifest.get("jobs", []):
-            process_job(manifest_path, item, config)
+            process_job(manifest_path, item, profile)
 
 
 if __name__ == "__main__":

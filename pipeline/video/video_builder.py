@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import tempfile
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -38,7 +39,7 @@ def prepare_thumbnail(source: Path, output: Path, *, config: dict[str, Any], ffm
     raise ValidationError(f"Thumbnail remains larger than {max_bytes} bytes: {output}")
 
 
-def render_video(thumbnail: Path, audio: Path, output: Path, *, config: dict[str, Any], ffmpeg_value: str) -> Path:
+def render_video(thumbnail: Path, audio: Path, output: Path, *, config: dict[str, Any], ffmpeg_value: str, ffprobe_value: str = "ffprobe") -> Path:
     ffmpeg = resolve_executable(ffmpeg_value)
     require_file(thumbnail, "thumbnail image")
     require_file(audio, "audio master")
@@ -49,15 +50,31 @@ def render_video(thumbnail: Path, audio: Path, output: Path, *, config: dict[str
         f"crop={width}:{height},format={config.get('pixel_format', 'yuv420p')},"
         "setparams=range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709"
     )
-    _run([
-        ffmpeg, "-y", "-hide_banner", "-loop", "1", "-framerate", str(fps), "-i", str(thumbnail), "-i", str(audio),
-        "-vf", vf, "-r", str(fps), "-c:v", str(config.get("codec", "libx264")),
-        "-profile:v", str(config.get("profile", "high")), "-b:v", str(config.get("video_bitrate", "8M")),
-        "-maxrate", str(config.get("max_bitrate", "12M")), "-bufsize", str(config.get("buffer_size", "16M")),
-        "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709",
-        "-c:a", str(config.get("audio_codec", "aac")), "-b:a", str(config.get("audio_bitrate", "384k")),
-        "-ar", str(config.get("audio_sample_rate", 48000)), "-ac", "2", "-movflags", "+faststart", "-shortest", str(output),
-    ])
+    duration = float(probe_media(audio, ffprobe_value).get("format", {}).get("duration", 0))
+    if duration <= 0:
+        raise ValidationError(f"Invalid audio duration: {audio}")
+    with tempfile.NamedTemporaryFile(prefix="render-loop-", suffix=".mp4", dir=output.parent, delete=False) as segment_file:
+        segment_path = Path(segment_file.name)
+    try:
+        # Encode two seconds of the still image, then reuse its H.264 packets.
+        # Every loop starts on a closed GOP, so no boundary needs re-encoding.
+        _run([
+            ffmpeg, "-y", "-hide_banner", "-loop", "1", "-framerate", str(fps), "-i", str(thumbnail),
+            "-frames:v", str(fps * 2), "-vf", vf, "-c:v", str(config.get("codec", "libx264")),
+            "-profile:v", str(config.get("profile", "high")), "-b:v", str(config.get("video_bitrate", "8M")),
+            "-maxrate", str(config.get("max_bitrate", "12M")), "-bufsize", str(config.get("buffer_size", "16M")),
+            "-g", str(max(1, fps // 2)), "-keyint_min", str(max(1, fps // 2)),
+            "-sc_threshold", "0", "-flags", "+cgop", "-bf", "2",
+            "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-an", str(segment_path),
+        ])
+        _run([
+            ffmpeg, "-y", "-hide_banner", "-stream_loop", "-1", "-i", str(segment_path), "-i", str(audio),
+            "-map", "0:v:0", "-map", "1:a:0", "-t", f"{duration:.6f}", "-c:v", "copy",
+            "-c:a", str(config.get("audio_codec", "aac")), "-b:a", str(config.get("audio_bitrate", "384k")),
+            "-ar", str(config.get("audio_sample_rate", 48000)), "-ac", "2", "-movflags", "+faststart", str(output),
+        ])
+    finally:
+        segment_path.unlink(missing_ok=True)
     return require_file(output, "rendered video")
 
 

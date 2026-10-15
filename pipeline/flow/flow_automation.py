@@ -30,7 +30,7 @@ from pipeline.flow.flow_downloader import DownloadedTrack, FlowDownloader
 
 
 FLOW_URL = "https://www.flowmusic.app/"
-PROMPT_SELECTOR = 'textarea[aria-label="Chat message"][placeholder="Let\'s create..."]'
+PROMPT_SELECTOR = 'textarea[aria-label="Chat message"]'
 SONG_LINK_SELECTOR = 'a[href^="/song/"]'
 SONG_CARD_XPATH = (
     "xpath=ancestor::div[@role='button' "
@@ -110,9 +110,18 @@ class FlowAutomation:
         queue_payload: Any,
     ) -> None:
         """Retry once, resuming a saved chat after generation, then skip on failure."""
-        if task.get("status") == "in_progress" and not task.get("song_hrefs"):
-            reset_task_for_fresh_generation(task)
+        if task.get("status") == "in_progress" and not has_saved_flow_session(task):
+            task["status"] = "needs_attention"
+            task["last_error"] = (
+                "Submission may have reached Flow, but no session URL was saved. "
+                "Check Flow before resetting this prompt to planned."
+            )
             atomic_write_json(queue_path, queue_payload)
+            print(
+                f"[{task.get('prompt_id')}] needs attention: submission state is "
+                "uncertain; not sending the prompt again"
+            )
+            return
 
         for attempt in range(1, self.generation_attempts + 1):
             print(
@@ -137,18 +146,31 @@ class FlowAutomation:
             except Exception as exc:
                 task["last_error"] = f"{type(exc).__name__}: {exc}"
                 task["attempt_count"] = attempt
+                if task.get("status") == "in_progress" and not has_saved_flow_session(task):
+                    task["status"] = "needs_attention"
+                    atomic_write_json(queue_path, queue_payload)
+                    print(
+                        f"[{task.get('prompt_id')}] needs attention: Flow submission "
+                        "may have succeeded but no session URL was saved; not retrying"
+                    )
+                    return
                 if attempt < self.generation_attempts:
                     if task.get("status") == "generated" and task.get("song_hrefs"):
                         print(
                             f"[{task.get('prompt_id')}] download failed; reopening "
                             "the saved Flow chat and trying the download once more"
                         )
-                    else:
+                    elif task.get("status") != "in_progress":
                         print(
                             f"[{task.get('prompt_id')}] generation attempt failed; "
                             "retrying once in a fresh Chrome context"
                         )
                         reset_task_for_fresh_generation(task, keep_error=True)
+                    else:
+                        print(
+                            f"[{task.get('prompt_id')}] resuming the saved Flow "
+                            "session without submitting the prompt again"
+                        )
                     atomic_write_json(queue_path, queue_payload)
                     await asyncio.sleep(5)
                     continue
@@ -223,13 +245,20 @@ class FlowAutomation:
     ) -> None:
         prompt_id = require_text(task, "prompt_id")
         prompt = require_text(task, "flow_prompt")
-        image_path = resolve_task_path(
-            queue_path, require_text(task, "visual_reference_path")
+        channel_id = queue_payload.get("channel_id") if isinstance(queue_payload, dict) else None
+        is_relax_music = channel_id == "relax_music" or (
+            not channel_id
+            and (task.get("track_metadata") or {}).get("genre") == "relax-music"
         )
-        if not image_path.is_file():
-            raise FlowAutomationError(
-                f"Visual reference does not exist for {prompt_id}: {image_path}"
+        image_path: Path | None = None
+        if not is_relax_music:
+            image_path = resolve_task_path(
+                queue_path, require_text(task, "visual_reference_path")
             )
+            if not image_path.is_file():
+                raise FlowAutomationError(
+                    f"Visual reference does not exist for {prompt_id}: {image_path}"
+                )
         if int(task.get("outputs_per_prompt", 2)) != 2:
             raise FlowAutomationError(
                 f"{prompt_id}: outputs_per_prompt must always be 2"
@@ -237,7 +266,8 @@ class FlowAutomation:
 
         target_url = (
             str(task.get("conversation_url"))
-            if task.get("status") == "generated" and task.get("conversation_url")
+            if task.get("status") in {"generated", "in_progress"}
+            and has_saved_flow_session(task)
             else self.flow_url
         )
         if page.url != target_url:
@@ -253,27 +283,37 @@ class FlowAutomation:
             resume_more_options = await saved_more_options_buttons(page, hrefs)
             new_links: list[Locator] = []
         else:
-            composer = page.locator(PROMPT_SELECTOR)
-            try:
-                await composer.wait_for(state="visible", timeout=60_000)
-            except PlaywrightTimeoutError as exc:
-                raise FlowAutomationError(
-                    "Flow composer was not found. Confirm that this AdsPower profile "
-                    "is logged in and can open flowmusic.app."
-                ) from exc
-            baseline_hrefs = set(await current_song_hrefs(page))
-            print(
-                f"[{prompt_id}] existing track count before submission: "
-                f"{len(baseline_hrefs)}"
-            )
-            await upload_reference_image(page, image_path)
-            await composer.fill(prompt)
-            task["status"] = "in_progress"
-            atomic_write_json(queue_path, queue_payload)
-            print(f"[{prompt_id}] submitting prompt with {image_path.name}")
-            await page.get_by_role("button", name="Send message").click()
-            task["conversation_url"] = page.url
-            atomic_write_json(queue_path, queue_payload)
+            if task.get("status") == "in_progress":
+                baseline_hrefs = set(task.get("baseline_song_hrefs") or [])
+                print(f"[{prompt_id}] waiting in the saved Flow session")
+            else:
+                composer = page.locator(PROMPT_SELECTOR)
+                try:
+                    await composer.wait_for(state="visible", timeout=60_000)
+                except PlaywrightTimeoutError as exc:
+                    raise FlowAutomationError(
+                        "Flow composer was not found. Confirm that this AdsPower profile "
+                        "is logged in and can open flowmusic.app."
+                    ) from exc
+                baseline_hrefs = set(await current_song_hrefs(page))
+                print(
+                    f"[{prompt_id}] existing track count before submission: "
+                    f"{len(baseline_hrefs)}"
+                )
+                if image_path is not None:
+                    await upload_reference_image(page, image_path)
+                await composer.fill(prompt)
+                task["status"] = "in_progress"
+                task["baseline_song_hrefs"] = sorted(baseline_hrefs)
+                atomic_write_json(queue_path, queue_payload)
+                if image_path is None:
+                    print(f"[{prompt_id}] submitting text-only Relax Music prompt")
+                else:
+                    print(f"[{prompt_id}] submitting prompt with {image_path.name}")
+                await page.get_by_role("button", name="Send message").click()
+                await page.wait_for_url(re.compile(r"/session/"), timeout=30_000)
+                task["conversation_url"] = page.url
+                atomic_write_json(queue_path, queue_payload)
 
             print(f"[{prompt_id}] waiting for Flow to finish both tracks")
             new_links = await wait_for_new_tracks(
@@ -384,6 +424,10 @@ async def wait_for_new_tracks(
     last_ready_count = 0
 
     while asyncio.get_running_loop().time() < deadline:
+        if await skip_choice_card_feedback(page):
+            # The A/B card has no /song/ link until feedback is skipped.
+            one_track_deadline = None
+            continue
         hrefs = await current_song_hrefs(page)
         new_hrefs = [href for href in hrefs if href not in baseline_hrefs]
         ready_hrefs = await ready_song_hrefs(page, new_hrefs)
@@ -421,6 +465,31 @@ async def wait_for_new_tracks(
     raise FlowAutomationError(
         "Timed out waiting for a newly generated Flow song card."
     )
+
+
+async def skip_choice_card_feedback(page: Page) -> bool:
+    """Reveal normal song cards when Flow shows its occasional Choose UI."""
+    if "/session/" not in page.url:
+        return False
+    choice_cards = page.locator(
+        'div[role="button"][aria-label^="Open details for "]'
+        ':has(button:text-is("Choose"))'
+    )
+    if await choice_cards.count() == 0:
+        return False
+
+    no_preference = page.get_by_role("button", name="No Preference", exact=True)
+    if await no_preference.count() == 0:
+        raise FlowAutomationError(
+            "Flow displayed Choose cards, but the No Preference button is missing."
+        )
+    await no_preference.first.click()
+    skip_feedback = page.get_by_role("menuitem", name="Skip feedback", exact=True)
+    await skip_feedback.wait_for(state="visible", timeout=10_000)
+    await skip_feedback.click()
+    await choice_cards.first.wait_for(state="hidden", timeout=30_000)
+    print("Skipped Flow choice feedback; waiting for normal song cards")
+    return True
 
 
 async def ready_song_hrefs(page: Page, hrefs: list[str]) -> list[str]:
@@ -520,8 +589,15 @@ def reset_task_for_fresh_generation(
     task["status"] = "pending_generation"
     task.pop("song_hrefs", None)
     task.pop("outputs", None)
+    task.pop("conversation_url", None)
+    task.pop("baseline_song_hrefs", None)
     if not keep_error:
         task.pop("last_error", None)
+
+
+def has_saved_flow_session(task: dict[str, Any]) -> bool:
+    """A session URL is required to resume without submitting twice."""
+    return "/session/" in str(task.get("conversation_url") or "")
 
 
 def find_active_adspower_endpoints(

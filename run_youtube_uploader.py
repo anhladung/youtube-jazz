@@ -9,16 +9,21 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
-from pipeline.common.config import PROJECT_ROOT, expand_path, load_config
+from pipeline.common.channels import (
+    ChannelProfile,
+    assert_channel,
+    assert_playlist_registry,
+    resolve_channel,
+)
+from pipeline.common.config import load_config
 from pipeline.common.validator import atomic_write_json, load_json, require_file
 from pipeline.music.library_manager import mark_tracks_used
 from pipeline.music.playlist_builder import load_locked_playlist
 from pipeline.youtube.uploader import upload_video
 
 
-INPUT_ROOT = PROJECT_ROOT / "input" / "batches"
 FIELDS = [
-    "queue_id", "batch_id", "video_id", "job_path", "video_path",
+    "queue_id", "channel_id", "batch_id", "video_id", "job_path", "video_path",
     "thumbnail_path", "metadata_path", "playlist_path", "title",
     "schedule_date", "schedule_time", "timezone", "status", "retry",
     "error", "youtube_url", "uploaded_at",
@@ -155,9 +160,9 @@ def update_manifest(manifest_path: Path, video_id: str, status: str) -> None:
     atomic_write_json(manifest_path, manifest)
 
 
-def append_history(name: str, entry: dict[str, Any]) -> None:
-    path = PROJECT_ROOT / "data" / name
-    payload = load_json(path) if path.is_file() else {"entries": []}
+def append_history(profile: ChannelProfile, name: str, entry: dict[str, Any]) -> None:
+    path = profile.data_dir / name
+    payload = load_json(path) if path.is_file() else {"channel_id": profile.channel_id, "entries": []}
     entries = payload.setdefault("entries", [])
     identity = (entry.get("video_id"), entry.get("event"))
     if not any((item.get("video_id"), item.get("event")) == identity for item in entries):
@@ -165,29 +170,42 @@ def append_history(name: str, entry: dict[str, Any]) -> None:
         atomic_write_json(path, payload)
 
 
-def record_completion(job: dict[str, Any], playlist: dict[str, Any], result: dict[str, Any]) -> None:
+def record_completion(profile: ChannelProfile, job: dict[str, Any], playlist: dict[str, Any], result: dict[str, Any]) -> None:
     video_id = str(job["video_id"])
     stamp = now_iso()
-    append_history("video_history.json", {
-        "video_id": video_id, "event": "uploaded", "timestamp": stamp, **result
+    common = {"channel_id": profile.channel_id}
+    append_history(profile, "video_history.json", {
+        **common, "video_id": video_id, "event": "uploaded", "timestamp": stamp, **result
     })
-    append_history("playlist_history.json", {
+    append_history(profile, "playlist_history.json", {
         "video_id": video_id, "event": "uploaded", "timestamp": stamp,
         "track_ids": [item.get("track_id") for item in playlist.get("tracks", [])],
     })
-    append_history("concept_history.json", {
+    append_history(profile, "concept_history.json", {
         "video_id": video_id, "event": "uploaded", "timestamp": stamp,
         "episode_profile": job.get("episode_profile", {}),
     })
 
 
 def sync_queue(
-    rows: list[dict[str, str]], manifests: list[Path], config: dict[str, Any]
+    rows: list[dict[str, str]], manifests: list[Path], config: dict[str, Any], profile: ChannelProfile
 ) -> int:
+    for row in rows:
+        if not row.get("channel_id") and profile.channel_id == "vintage_jazz":
+            row["channel_id"] = profile.channel_id
+        elif row.get("channel_id") and row["channel_id"] != profile.channel_id:
+            raise ValueError(
+                f"Queue contains {row['channel_id']} data but selected channel is "
+                f"{profile.channel_id}"
+            )
     existing = {row.get("queue_id"): row for row in rows}
+    existing_videos = {
+        (row.get("batch_id"), row.get("video_id")): row for row in rows
+    }
     added = 0
     for manifest_path in manifests:
         manifest = load_json(manifest_path)
+        assert_channel(manifest, profile, manifest_path)
         batch_dir = manifest_path.parent
         for item in manifest.get("jobs", []):
             job_path = resolve_job_file(batch_dir, batch_dir, str(item["path"]))
@@ -197,10 +215,11 @@ def sync_queue(
                 continue
             video_id = str(job.get("video_id") or item.get("video_id"))
             batch_id = str(job.get("batch_id") or manifest.get("batch_id"))
-            queue_id = f"{batch_id}:{video_id}"
-            if queue_id in existing:
+            queue_id = f"{profile.channel_id}:{batch_id}:{video_id}"
+            prior = existing.get(queue_id) or existing_videos.get((batch_id, video_id))
+            if prior:
                 if status == "uploaded":
-                    existing[queue_id]["status"] = "done"
+                    prior["status"] = "done"
                 continue
             outputs = job.get("outputs") or {}
             files = job.get("files") or {}
@@ -214,6 +233,7 @@ def sync_queue(
             schedule_date, schedule_time, timezone_name = next_schedule(rows, config)
             row = {
                 "queue_id": queue_id,
+                "channel_id": profile.channel_id,
                 "batch_id": batch_id,
                 "video_id": video_id,
                 "job_path": str(job_path),
@@ -237,9 +257,14 @@ def sync_queue(
     return added
 
 
-def process_row(row: dict[str, str], config: dict[str, Any]) -> None:
+def process_row(row: dict[str, str], profile: ChannelProfile) -> None:
+    config = profile.config
+    row_channel = row.get("channel_id") or "vintage_jazz"
+    if row_channel != profile.channel_id:
+        raise ValueError(f"Queue row belongs to {row_channel}, not {profile.channel_id}")
     job_path = Path(row["job_path"])
     job = load_json(job_path)
+    assert_channel(job, profile, job_path)
     video_id = row["video_id"]
     manifest_path = job_path.parents[2] / "batch_manifest.json"
     output_dir = Path(row["video_path"]).parent
@@ -260,6 +285,7 @@ def process_row(row: dict[str, str], config: dict[str, Any]) -> None:
     metadata["schedule_date"] = row["schedule_date"]
     metadata["schedule_time"] = row["schedule_time"]
     playlist, _ = load_locked_playlist(Path(row["playlist_path"]))
+    assert_playlist_registry(playlist, profile, Path(row["playlist_path"]))
     video_path = require_file(Path(row["video_path"]), "rendered video")
     thumbnail_path = require_file(Path(row["thumbnail_path"]), "upload thumbnail")
     row["error"] = ""
@@ -275,8 +301,8 @@ def process_row(row: dict[str, str], config: dict[str, Any]) -> None:
         str(track["track_id"])
         for track in playlist.get("tracks", []) if track.get("track_id")
     ]
-    mark_tracks_used(track_ids, video_id)
-    record_completion(completed_job, playlist, result)
+    mark_tracks_used(track_ids, video_id, profile.registry_path)
+    record_completion(profile, completed_job, playlist, result)
     row["status"] = "done"
     row["youtube_url"] = str(result.get("url") or "")
     row["uploaded_at"] = now_iso()
@@ -291,13 +317,25 @@ def main() -> None:
     parser.add_argument("--queue", type=Path, help="Alternative queue CSV path")
     parser.add_argument("--limit", type=int, help="Maximum pending rows to process")
     parser.add_argument("--config", type=Path)
+    parser.add_argument("--channel", default=None, help="vintage-jazz or relax-music")
     args = parser.parse_args()
     config = load_config(args.config)
+    profile = resolve_channel(config, args.channel)
+    config = profile.config
     youtube_config = config.get("youtube", {})
+    if not youtube_config.get("enabled", True):
+        raise RuntimeError(
+            f"YouTube upload is disabled for {profile.label}; configure its channel URL "
+            "and separate Chrome profile in config.local.yaml first."
+        )
+    if not youtube_config.get("profile_dir") or not youtube_config.get("channel_url"):
+        raise RuntimeError(
+            f"Missing YouTube profile_dir or channel_url for {profile.label}."
+        )
     queue_path = (
         args.queue.resolve()
         if args.queue
-        else expand_path(youtube_config.get("queue_file", "data/youtube_upload_queue.csv"))
+        else profile.youtube_queue_path
     )
     rows = load_queue(queue_path)
     print(f"Queue: {queue_path} ({len(rows)} rows)")
@@ -317,7 +355,7 @@ def main() -> None:
         row["error"] = ""
         save_queue(queue_path, rows)
         try:
-            process_row(row, config)
+            process_row(row, profile)
         except Exception as exc:
             row["status"] = "error"
             row["retry"] = str(int(row.get("retry") or 0) + 1)

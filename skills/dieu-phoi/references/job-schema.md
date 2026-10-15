@@ -64,6 +64,7 @@ Only real registry tracks with `status: available` may appear here. No subjectiv
 ```json
 {
   "schema_version": 2,
+  "channel_id": "vintage_jazz",
   "batch_id": "batch_YYYYMMDD_HHMMSS",
   "video_id": "video_001",
   "status": "ready_for_pipeline",
@@ -118,6 +119,7 @@ Write this file last:
 ```json
 {
   "schema_version": 2,
+  "channel_id": "vintage_jazz",
   "batch_id": "batch_YYYYMMDD_HHMMSS",
   "requested_video_count": 3,
   "created_at": "ISO-8601 timestamp",

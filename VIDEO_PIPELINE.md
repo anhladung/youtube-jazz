@@ -17,8 +17,13 @@ output/batches/<batch_id>/<video_id>/
 ├── audio_master.wav
 ├── thumbnail.jpg
 ├── <seo-title>-<video_id>.mp4
+├── youtube_manual.txt
 └── validation.json
 ```
+
+`youtube_manual.txt` contains only the YouTube title, a blank line, and the
+description from `youtube.json`, ready to copy into YouTube Studio. Re-running
+an existing ready or uploaded batch with `--batch` also refreshes this file.
 
 The MP4 filename is derived from the title in `youtube.json`, normalized to a
 Windows-safe lowercase slug, and suffixed with `video_id` to prevent collisions.

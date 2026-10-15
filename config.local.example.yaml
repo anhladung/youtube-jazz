@@ -1,0 +1,9 @@
+# Copy this file to config.local.yaml. The local file is ignored by Git and is
+# merged over config.yaml automatically.
+channels:
+  relax_music:
+    overrides:
+      youtube:
+        enabled: true
+        profile_dir: "C:\\youtube_relax_profile"
+        channel_url: "https://studio.youtube.com/channel/RELAX_CHANNEL_ID"

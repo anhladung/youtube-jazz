@@ -20,6 +20,11 @@ input/current_job/
 input/library_builds/
 library/music/tracks/
 library/music/.playwright-downloads/
+input/relax_music/library_builds/
+input/relax_batches/
+library/relax_music/tracks/
+library/relax_music/.playwright-downloads/
+data/relax_music/youtube_upload_queue.csv
 *.crdownload
 *.wav
 *.mp3

@@ -19,6 +19,7 @@ Khi người dùng gọi `$dieu-phoi tạo N video nhạc jazz`, mặc định:
 - tạo actual thumbnail 16:9 bằng reference Popeye1, không chỉ viết prompt, trừ khi người dùng yêu cầu prompt-only;
 - tạo SEO metadata sau khi playlist, episode profile và thumbnail đã chốt;
 - ghi các package vào `input/batches/<batch_id>/`;
+- ghi `channel_id: vintage_jazz` ở cấp cao nhất của cả `job.json` và `batch_manifest.json`;
 - không tạo prompt Flow trong chế độ đóng gói mặc định, không chạy Flow, không download nhạc, không ghép audio/video và không upload YouTube.
 
 ## Skills thành phần
